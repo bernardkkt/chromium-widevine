@@ -18,10 +18,9 @@ which wget && DLTOOL="wget -O -"
 which curl && DLTOOL="curl -L"
 [[ -z ${DLTOOL} ]] && echo "No download tool found on this system" 1>&2 && exit 1
 
-# Fix download argument for wget
-DARG=${@}
-[[ ${DLTOOL} == "wget -O -" ]] && DARG=`sed 's/\-o /\-O /' ${DARG}`
-
 # Begin download
 VERSION=$(${DLTOOL} https://dl.google.com/widevine-cdm/versions.txt | tail -n1)
+# Fix download argument for wget
+DARG=${@}
+[[ ${DLTOOL} == "wget -O -" ]] && DARG=`sed 's/\-o /\-O /' ${DARG}` && DLTOOL="wget"
 ${DLTOOL} ${DARG} "https://dl.google.com/widevine-cdm/${VERSION}-linux-${ARCH}.zip"
