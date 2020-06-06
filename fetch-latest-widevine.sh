@@ -22,5 +22,5 @@ which curl && DLTOOL="curl -L"
 VERSION=$(${DLTOOL} https://dl.google.com/widevine-cdm/versions.txt | tail -n1)
 # Fix download argument for wget
 DARG=${@}
-[[ ${DLTOOL} == "wget -O -" ]] && DARG=`sed 's/\-o /\-O /' ${DARG}` && DLTOOL="wget"
+[[ ${DLTOOL} == "wget -O -" ]] && DARG=`echo ${DARG} | sed 's/\-o /\-O /'` && DLTOOL="wget"
 ${DLTOOL} ${DARG} "https://dl.google.com/widevine-cdm/${VERSION}-linux-${ARCH}.zip"
